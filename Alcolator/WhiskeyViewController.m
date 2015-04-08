@@ -14,6 +14,18 @@
 
 @implementation WhiskeyViewController
 
+
+- (void) viewDidLoad {
+    [super viewDidLoad];
+    
+    
+    int numberOfBeers = self.beerCountSlider.value;
+    self.title = [NSString stringWithFormat:@"Whiskey %d", numberOfBeers];
+    
+    
+}
+
+
 - (void)buttonPressed:(UIButton *)sender;
 {
     [self.beerPercentTextField resignFirstResponder];
