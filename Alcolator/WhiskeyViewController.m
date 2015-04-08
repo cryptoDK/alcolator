@@ -15,13 +15,21 @@
 @implementation WhiskeyViewController
 
 
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        self.title = NSLocalizedString(@"Whiskey", nil);
+        [self.tabBarItem setTitlePositionAdjustment:UIOffsetMake(0, -18)];
+    }
+    return self;
+}
+
+
+
 - (void) viewDidLoad {
     [super viewDidLoad];
-    
-    
-    int numberOfBeers = self.beerCountSlider.value;
-    self.title = [NSString stringWithFormat:@"Whiskey %d", numberOfBeers];
-    
+
+    self.view.backgroundColor = [UIColor colorWithRed:0.241 green:0.425 blue:0.714 alpha:1]; /*#bdecb6*/
     
 }
 

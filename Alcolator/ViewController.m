@@ -21,6 +21,8 @@
 @implementation ViewController
 
 
+
+
 - (void)loadView {
     
     
@@ -53,17 +55,31 @@
     self.beerCounter = beerCounter;
 }
 
+//Review this code with Mark
+- (instancetype) init {
+    self = [super init];
+    
+    if (self) {
+        self.title = NSLocalizedString(@"Wine", @"wine");
+        [self.tabBarItem setTitlePositionAdjustment:UIOffsetMake(0, -18)];
+        // access to tabbaritems in all view controllers?
+        
+    }
+    
+    return self;
+}
+
+
+
 
 - (void)viewDidLoad
 {
     // Calls the superclass's implementation
     [super viewDidLoad];
     
-    int numberOfBeers = self.beerCountSlider.value;
-    self.title = [NSString stringWithFormat:@"Wine %d", numberOfBeers];
-
     
-    
+    self.resultLabel.numberOfLines = 0;
+    self.view.backgroundColor = [UIColor colorWithRed:0.992 green:0.992 blue:0.588 alpha:1]; /*#fdfd96*/
     
     self.beerPercentTextField.textColor = [UIColor redColor];
     self.calculateButton.backgroundColor = [UIColor redColor];
@@ -71,8 +87,9 @@
     self.beerCountSlider.tintColor = [UIColor redColor];
     self.beerPercentTextField.backgroundColor = [UIColor whiteColor];
     
+    
     [self.beerPercentTextField setFont:[UIFont fontWithName:@"Arial" size:20]];
-    self.calculateButton.font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:20];
+    self.calculateButton.font = [UIFont fontWithName:@"AmericanTypewriter-Bold" size:20.0f];
     
     
     // Set our primary view's background color to lightGrayColor
@@ -116,22 +133,21 @@
     CGFloat halfPadding = 25;
     CGFloat itemWidth = viewWidth - padding - halfPadding;
     CGFloat itemHeight = 44;
+    CGFloat slidebarDown = 150;
     
-    self.beerPercentTextField.frame = CGRectMake(padding, padding * 5, itemWidth, itemHeight);
+    self.beerPercentTextField.frame = CGRectMake(padding, padding, itemWidth, itemHeight);
+    
+    self.calculateButton.frame = CGRectMake(padding, itemHeight + padding + halfPadding, itemWidth, itemHeight);
     
     CGFloat bottomOfTextField = CGRectGetMaxY(self.beerPercentTextField.frame);
-    self.beerCountSlider.frame = CGRectMake(padding, bottomOfTextField + padding, itemWidth, itemHeight);
+    self.beerCountSlider.frame = CGRectMake(padding, slidebarDown, itemWidth, itemHeight);
     
     CGFloat bottomOfSlider = CGRectGetMaxY(self.beerCountSlider.frame);
-    self.resultLabel.frame = CGRectMake(padding, bottomOfSlider + halfPadding, itemWidth, itemHeight * 4);
+    self.resultLabel.frame = CGRectMake(padding, 170, itemWidth, itemHeight * 2);
     
-    CGFloat bottomOfLabel = CGRectGetMaxY(self.resultLabel.frame);
-    self.calculateButton.frame = CGRectMake(padding, bottomOfLabel + padding, itemWidth, itemHeight);
-
-    
-
-
+ 
 }
+
 
 
 
@@ -150,6 +166,13 @@
 
 - (void)sliderValueDidChange:(UISlider *)sender {
     // SAME CODE AS BEFORE
+    NSLog(@"Slider value changed to %f", sender.value);
+    
+    //Can I send nslog output any time for debugging? 
+    
+    [self.beerPercentTextField resignFirstResponder];
+    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d", (int) sender.value]];
+    
 }
 
 - (void)buttonPressed:(UIButton *)sender {

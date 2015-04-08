@@ -8,9 +8,10 @@
 
 #import "AppDelegate.h" 
 #import "ViewController.h"
-#import "MainMenuViewController.h"
+#import "ViewController.h"
+#import "WhiskeyViewController.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <UITabBarControllerDelegate> // declares that it conforms to the UITabBarControllerDelegate
 
 @end
 
@@ -23,17 +24,30 @@
     // Override point for customization after application launch.
     
     
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] ;
     // Override point for customization after application launch.
     
-    MainMenuViewController *mainMenuViewController = [[MainMenuViewController alloc] init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainMenuViewController];
-    self.window.rootViewController = navigationController;
+    ViewController *wineVC = [[ViewController alloc] init];
+    WhiskeyViewController *whiskeyVC = [[WhiskeyViewController alloc] init];
+    UITabBarController *tabBarVC = [[UITabBarController alloc] init];
+    tabBarVC.viewControllers = @[wineVC, whiskeyVC];
+    
+    self.window.rootViewController = tabBarVC;
+    tabBarVC.delegate = self; // UITabBarController's delegate property
+    
+ 
+    [self.window addSubview:tabBarVC.view];
+
     
     [self.window makeKeyAndVisible];
     
     return YES;
 }
+
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -55,6 +69,11 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    NSLog(@"New view controller selected: %@", viewController.title);
+    // implementation should print the title of the newly-selected view controller into the console with a message
 }
 
 @end
