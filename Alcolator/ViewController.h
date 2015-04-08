@@ -16,7 +16,7 @@
 
 - (void)buttonPressed:(UIButton *)sender;
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
+
 
 @end
 
